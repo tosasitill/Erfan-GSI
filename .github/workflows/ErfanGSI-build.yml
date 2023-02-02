@@ -36,7 +36,7 @@ jobs:
       - name: 获取 ErfanGSI 工具
         uses: actions/checkout@main
         with:
-          repository: erfanoabdi/ErfanGSIs
+          repository: tosasitill/erfanSGSI
           path: ErfanGSIs
 
       - name: 更换 777 权限
