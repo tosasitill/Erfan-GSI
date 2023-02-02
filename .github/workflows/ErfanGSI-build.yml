@@ -1,0 +1,89 @@
+name: ErfanGSI-build
+
+on:
+  workflow_dispatch:
+    inputs:
+      ROM_URL:
+        description: '直链'
+        required: true
+        default: 'https://mirrorbits.lineageos.org/full/tissot/20230110/lineage-19.1-20230110-nightly-tissot-signed.zip'
+      REPACK_NAME:
+        description: '打包名称'
+        required: true
+        default: '这里写名字哦.7z'
+      ROM_TYPE:
+        description: 'ROM类型'
+        required: true
+        default: 'Generic'
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: 获取源代码
+        uses: actions/checkout@main
+        with: 
+          path: ErfanGSIs
+
+      - name: 获取变量
+        run: |
+          echo "BUILD_TIME=$(date +%s | md5sum | awk '{print substr($1,1,10)}')" >> $GITHUB_ENV
+
+      - name: 配置环境‌‌
+        run: |
+          sudo apt install -y git wget git zip unzip curl axel aria2 zstd rename
+
+      - name: 获取 ErfanGSI 工具
+        uses: actions/checkout@main
+        with:
+          repository: erfanoabdi/ErfanGSIs
+          path: ErfanGSIs
+
+      - name: 更换 777 权限
+        run: |
+          sudo chmod 777 -R $GITHUB_WORKSPACE/ErfanGSIs
+
+      - name: 修复意外退出
+        run: |
+              sed -i 's/\|\| exit 1//g' ErfanGSIs/url2GSI.sh
+              sed -i 's/exit 1//g' ErfanGSIs/url2GSI.sh
+
+      - name: 建立并配置 ErfanGSI 工具所需环境
+        run: |
+          sudo sed -i 's/USE_MIRROR_FOR_PIP\=true/USE_MIRROR_FOR_PIP\=false/' $GITHUB_WORKSPACE/ErfanGSIs/setup.sh
+          sudo bash $GITHUB_WORKSPACE/ErfanGSIs/setup.sh
+          sudo apt-get -y --purge remove "adoptopenjdk-11-hotspot"
+          java -version
+          pip3 install aligo
+
+      - name: 下载 ROM 并制作 GSI
+        run: |
+          cd ${{ github.workspace }}/ErfanGSIs/
+          sudo bash ./url2GSI.sh --ab ${{ github.event.inputs.ROM_URL }} ${{ github.event.inputs.ROM_TYPE }}
+          
+      - name: 压缩 GSI
+        if: ${{ github.event.inputs.ALI }} != '1'
+        run: |
+          cd $GITHUB_WORKSPACE/ErfanGSIs
+          pwd
+          7za a -t7z -r AB_${{ github.event.inputs.REPACK_NAME }} output/*
+          ls "AB_${{ github.event.inputs.REPACK_NAME }}"
+          echo "--------------------------------------"
+          ls
+          echo "--------------------------------------"
+          mkdir upload_ab
+          echo "--------------------------------------"
+          ls upload_ab
+          echo "--------------------------------------"
+          if [ $(ls -l AB_${{ github.event.inputs.REPACK_NAME }} | awk '{print $5}') -gt 2147483647 ]; then tar cvzpf - AB_${{ github.event.inputs.REPACK_NAME }} | split -d -b 1024m - upload_ab/AB_${{ github.event.inputs.REPACK_NAME }}; else mv AB_${{ github.event.inputs.REPACK_NAME }} upload_ab/AB_${{ github.event.inputs.REPACK_NAME }}; fi
+          echo "--------------------------------------"
+          ls upload_ab
+          echo "--------------------------------------"
+
+      - name: 上传至 Github Releases
+        if: ${{ github.event.inputs.ALI }} != '1'
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          artifacts: "${{ github.workspace }}/ErfanGSIs/upload_ab/*"
+          tag: "${{ github.event.inputs.REPACK_NAME }}_${{ env.BUILD_TIME }}"
+          token: ${{ secrets.GITHUB_TOKEN }}
