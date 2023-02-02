@@ -86,4 +86,5 @@ jobs:
         with:
           artifacts: "${{ github.workspace }}/ErfanGSIs/upload_ab/*"
           tag: "${{ github.event.inputs.REPACK_NAME }}_${{ env.BUILD_TIME }}"
+          bodyFile: "${{ github.workspace }}/ErfanGSIs/output/build_info.txt"
           token: ${{ secrets.GITHUB_TOKEN }}
