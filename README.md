@@ -6,4 +6,4 @@
 
 感谢原项目的所有大佬 包括但不限于 XiaoXinDaDa PPkun Cramfs28 Wwrrj Sakura Ex3124 Mtf Xph erfanGSI Nippon VegaBobo 
 
-# 暂时别用 打包img等待问题修复
+# 2023.2.4测试可用
