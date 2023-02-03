@@ -1,5 +1,5 @@
 # Erfan-GSI
-一个做GSI的aciton  
+一个做GSI的action  
 
 ## 使用方法
 打开aciton-填入链接、名称、类型-完成。
