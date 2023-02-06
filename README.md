@@ -16,5 +16,5 @@ fork-aciton-填入链接、名称、类型-完成
 ### 安卓12：
 > Generic、Pixel
 ### 安卓13：
-> Generic、Pixel、ColorOS
+> Generic、Pixel、ColorOS(测试中)、OriginOS(测试中)
 # 2023.2.4测试可用
