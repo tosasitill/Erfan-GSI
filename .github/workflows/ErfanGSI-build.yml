@@ -66,8 +66,8 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/ErfanGSIs
           pwd
-          7za a -t7z -r AB_${{ github.event.inputs.REPACK_NAME }} output/*
-          ls "AB_${{ github.event.inputs.REPACK_NAME }}"
+          7za a -t7z -r tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} output/*
+          ls "tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}"
           echo "--------------------------------------"
           ls
           echo "--------------------------------------"
@@ -75,7 +75,7 @@ jobs:
           echo "--------------------------------------"
           ls upload_ab
           echo "--------------------------------------"
-          if [ $(ls -l AB_${{ github.event.inputs.REPACK_NAME }} | awk '{print $5}') -gt 2147483647 ]; then tar cvzpf - AB_${{ github.event.inputs.REPACK_NAME }} | split -d -b 1024m - upload_ab/AB_${{ github.event.inputs.REPACK_NAME }}; else mv AB_${{ github.event.inputs.REPACK_NAME }} upload_ab/AB_${{ github.event.inputs.REPACK_NAME }}; fi
+          if [ $(ls -l tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | awk '{print $5}') -gt 2147483647 ]; then tar cvzpf - tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | split -d -b 1024m - upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; else mv tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; fi
           echo "--------------------------------------"
           ls upload_ab
           echo "--------------------------------------"
