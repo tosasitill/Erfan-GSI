@@ -10,11 +10,11 @@ fork-aciton-填入链接、名称、类型-完成
 ### 安卓9： 
 > ColorOS、Flyme、Generic、MIUI、Moto、Nubia、OneUI、OxygenOS、Pixel、Xperia、ZUI、ZenUI
 ### 安卓10：
->Generic、MIUI、OxygenOS (氢OS HydrogenOS 的海外版，两者跑 gsi 都用 OxygenOS 代替)、Pixel、Flyme
+>Generic、MIUI、OxygenOS (HydrogenOS、OxygenOS)、Pixel、Flyme
 ### 安卓11：
 > Generic、Pixel
 ### 安卓12：
 > Generic、Pixel
 ### 安卓13：
-> Generic、Pixel、ColorOS(测试中)、OriginOS(测试中)
+> Generic、Pixel、ColorOS(测试中)、OriginOS(测试中)、MIUI(测试中)
 # 2023.2.4测试可用
