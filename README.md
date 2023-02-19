@@ -21,7 +21,7 @@ Special thanks to all the developers of the original project, including but not 
 ### Android 12：
 > Generic、Pixel
 ### Android 13：
-> Generic、Pixel、ColorOS(测试中)、OriginOS(测试中)、MIUI(测试中)
+> Generic、Pixel、ColorOS(testing)、OriginOS(testing)、MIUI(testing)
 ### Android 14：
 > Generic、Pixel
 # Test Date: February 4th, 2023
