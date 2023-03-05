@@ -6,7 +6,7 @@ on:
       ROM_URL:
         description: 'Direct link/直链'
         required: true
-        default: 'https://mirrorbits.lineageos.org/full/discovery/20230302/lineage-19.1-20230302-nightly-discovery-signed.zip'
+        default: 'https://mirrorbits.lineageos.org/full/sagit/20230302/lineage-20.0-20230302-nightly-sagit-signed.zip'
       REPACK_NAME:
         description: 'Compressed name/打包名称'
         required: true
@@ -31,7 +31,7 @@ jobs:
 
       - name: 配置环境‌‌
         run: |
-          sudo apt install -y git wget git zip unzip curl axel aria2 zstd rename p7zip-full
+          sudo apt install -y git wget git gzip unzip curl axel aria2 zstd rename p7zip-full pigz
 
       - name: 获取 ErfanGSI 工具
         uses: actions/checkout@main
@@ -66,7 +66,7 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/ErfanGSIs
           pwd
-          7za a -mmt16 -ttar -so output/* | 7za a -mmt16 -tgz -si tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}.tgz
+          tar --use-compress-program="pigz -p 16" -cvf tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}.tar.gz output/
           ls "tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}"
           mkdir upload_ab
           ls upload_ab
