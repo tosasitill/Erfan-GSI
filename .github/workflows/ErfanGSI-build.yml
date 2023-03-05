@@ -31,7 +31,7 @@ jobs:
 
       - name: 配置环境‌‌
         run: |
-          sudo apt install -y git wget git zip unzip curl axel aria2 zstd rename
+          sudo apt install -y git wget git zip unzip curl axel aria2 zstd rename p7zip-full
 
       - name: 获取 ErfanGSI 工具
         uses: actions/checkout@main
