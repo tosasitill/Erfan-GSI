@@ -6,7 +6,7 @@ on:
       ROM_URL:
         description: 'Direct link/直链'
         required: true
-        default: 'https://mirrorbits.lineageos.org/full/tissot/20230110/lineage-19.1-20230110-nightly-tissot-signed.zip'
+        default: 'https://mirrorbits.lineageos.org/full/discovery/20230302/lineage-19.1-20230302-nightly-discovery-signed.zip'
       REPACK_NAME:
         description: 'Compressed name/打包名称'
         required: true
