@@ -70,7 +70,7 @@ jobs:
           ls "tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}"
           mkdir upload_ab
           ls upload_ab
-          if [ $(ls -l tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | awk '{print $5}') -gt 2147483647 ]; then tar cvzpf - tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | split -d -b 1680m - upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; else mv tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; fi
+          if [ $(ls -l tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | awk '{print $5}') -gt 2147483647 ]; then tar cvzpf - tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | split -d -b 1024m - upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; else mv tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; fi
 
       - name: 上传至 Github Releases
         if: ${{ github.event.inputs.ALI }} != '1'
