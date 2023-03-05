@@ -66,7 +66,7 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/ErfanGSIs
           pwd
-          7za a -t7z -r tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} output/*
+          7za a -mmt16 -ttar -so output/* | 7za a -mmt16 -tgz -si tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}.tgz
           ls "tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}"
           mkdir upload_ab
           ls upload_ab
