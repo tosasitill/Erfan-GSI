@@ -71,7 +71,16 @@ jobs:
           mkdir upload_ab
           ls upload_ab
           if [ $(ls -l tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | awk '{print $5}') -gt 2147483647 ]; then tar cvzpf - tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | split -d -b 1024m - upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; else mv tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; fi
-
+          build_info=$(cat ${{ github.workspace }}/ErfanGSIs/output/build_info.txt)
+          echo "::set-env name=BUILD_INFO::${build_info}"
+      - name: Send Telegram Notification
+        run: |
+          message="构建成功！
+          \n${{ env.BUILD_INFO }}"
+          curl -s -X POST https://api.telegram.org/bot6104379687:AAFOtHFwo0NSh0pYP1zAa92aacDYqSUAdeQ/sendMessage \
+            -d chat_id=1214932938 \
+            -d text="$message"
+            
       - name: 上传至 Github Releases
         if: ${{ github.event.inputs.ALI }} != '1'
         uses: ncipollo/release-action@v1.12.0
