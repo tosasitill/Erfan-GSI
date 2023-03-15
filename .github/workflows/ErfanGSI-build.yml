@@ -71,8 +71,7 @@ jobs:
           mkdir upload_ab
           ls upload_ab
           if [ $(ls -l tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | awk '{print $5}') -gt 2147483647 ]; then tar cvzpf - tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | split -d -b 1024m - upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; else mv tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; fi
-          build_info=$(cat ${{ github.workspace }}/ErfanGSIs/output/build_info.txt)
-          echo "::set-env name=BUILD_INFO::${build_info}"
+          echo "BUILD_INFO=$(cat ${{ github.workspace }}/ErfanGSIs/output/build_info.txt)" >> $GITHUB_ENV
       - name: Send Telegram Notification
         run: |
           message="构建成功！
