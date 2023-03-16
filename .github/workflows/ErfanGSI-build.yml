@@ -40,9 +40,9 @@ jobs:
          to: 1214932938
          token: ${{ secrets.TELEGRAM_TOKEN }}
          message: tosasitill GSI 开始构建！
-          /n构建开始时间：${{ env.BUILD_sTIME }}
-          /n提交链接：${{ github.event.inputs.ROM_URL }}
-          /n提交 GSI 类型：${{ github.event.inputs.ROM_TYPE }}
+                      构建开始时间：${{ env.BUILD_sTIME }}
+                         提交链接：${{ github.event.inputs.ROM_URL }}
+                             提交 GSI 类型：${{ github.event.inputs.ROM_TYPE }}
 
       - name: 配置环境‌‌
         run: |
