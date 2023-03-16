@@ -10,11 +10,15 @@ on:
       REPACK_NAME:
         description: 'Compressed name/打包名称'
         required: true
-        default: 'TEST.7z'
+        default: 'Compressed.7z'
       ROM_TYPE:
         description: 'ROM type/ROM 类型'
         required: true
         default: 'Generic'
+env:
+  TELEGRAM_TO: <telegram_id>
+  TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+
 jobs:
   build_tosasitill_GSI:
     runs-on: ubuntu-20.04
@@ -22,7 +26,7 @@ jobs:
     steps:
       - name: 获取源代码
         uses: actions/checkout@main
-        with: 
+        with:
           path: ErfanGSIs
 
       - name: 获取变量
@@ -60,7 +64,7 @@ jobs:
         run: |
           cd ${{ github.workspace }}/ErfanGSIs/
           sudo bash ./url2GSI.sh --ab ${{ github.event.inputs.ROM_URL }} ${{ github.event.inputs.ROM_TYPE }}
-          
+
       - name: 压缩 GSI
         if: ${{ github.event.inputs.ALI }} != '1'
         run: |
@@ -72,7 +76,20 @@ jobs:
           ls upload_ab
           if [ $(ls -l tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | awk '{print $5}') -gt 2147483647 ]; then tar cvzpf - tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | split -d -b 1024m - upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; else mv tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; fi
 
-            
+      - name: 发送 Telegram 消息
+        if: success()
+        uses: appleboy/telegram-action@v1.1
+        with:
+          to: ${{ env.TELEGRAM_TO }}
+          token: ${{ env.TELEGRAM_TOKEN }}
+          message: |
+            tosasitill GSI 构建成功!
+            GSI 文件名称: `tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}`
+            构建 GSI 详细信息:
+            ```
+            $(cat ${{ github.workspace }}/ErfanGSIs/build_info.txt)
+            ```
+
       - name: 上传至 Github Releases
         if: ${{ github.event.inputs.ALI }} != '1'
         uses: ncipollo/release-action@v1.12.0
