@@ -86,7 +86,6 @@ jobs:
           mkdir upload_ab
           ls upload_ab
           if [ $(ls -l tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | awk '{print $5}') -gt 2147483647 ]; then tar cvzpf - tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | split -d -b 1024m - upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; else mv tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; fi
-          echo "BUILD_INFO=$(cat ${{ github.workspace }}/ErfanGSIs/output/build_info.txt)" >> $GITHUB_ENV
 
       - name: 发送 Telegram 提醒消息 2/2
         uses: appleboy/telegram-action@master
@@ -95,7 +94,6 @@ jobs:
             token: ${{ secrets.TELEGRAM_TOKEN }}
             message: tosasitill GSI 构建成功!
               构建 GSI 详细信息如下！
-              ${{ env.BUILD_INFO }}
             document: ${{ github.workspace }}/ErfanGSIs/build_info.txt
 
       - name: 上传至 Github Releases
