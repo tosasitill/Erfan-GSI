@@ -32,7 +32,7 @@ jobs:
       - name: 获取变量
         run: |
           echo "BUILD_TIME=$(date +%s | md5sum | awk '{print substr($1,1,10)}')" >> $GITHUB_ENV
-          echo "BUILD_TIME=$(TZ=Asia/Shanghai date -d @$(date +%s) +'%Y-%m-%d %H:%M:%S %Z')" >> $GITHUB_ENV
+          echo "BUILD_sTIME=$(TZ=Asia/Shanghai date -d @$(date +%s) +'%Y-%m-%d %H:%M:%S %Z')" >> $GITHUB_ENV
 
       - name: 发送 Telegram 提醒消息 1/2
         uses: appleboy/telegram-action@master
@@ -40,9 +40,9 @@ jobs:
          to: 1214932938
          token: ${{ secrets.TELEGRAM_TOKEN }}
          message: tosasitill GSI 开始构建！
-          构建开始时间：${{ env.BUILD_START_TIME }}
-          提交链接：${{ github.event.inputs.ROM_URL }}
-          提交 GSI 类型：${{ github.event.inputs.ROM_TYPE }}
+          /n构建开始时间：${{ env.BUILD_sTIME }}
+          /n提交链接：${{ github.event.inputs.ROM_URL }}
+          /n提交 GSI 类型：${{ github.event.inputs.ROM_TYPE }}
 
       - name: 配置环境‌‌
         run: |
