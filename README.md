@@ -5,6 +5,7 @@ An action for creating GSIs.
 ## Usage
 
 Fork the action, fill in the link, name, and type, and complete.
+Please add your telegram bot token "TELEGRAM_TOKEN" to Github Serect
 
 Special thanks to all the developers of the original project, including but not limited to XiaoXinDaDa, PPkun, Cramfs28, Wwrrj, Sakura, Ex3124, Mtf, Xph, erfanGSI, Nippon, VegaBobo, mi20210630, and 巨龙Jvlong.
 
