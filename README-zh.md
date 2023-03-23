@@ -3,6 +3,7 @@
 
 ## 使用方法
 fork-aciton-填入链接、名称、类型-完成
+注意！请先添加你的 telegram bot token 以 "TELEGRAM_TOKEN" 保存至 Github Serect
 
 感谢原项目的所有大佬 包括但不限于 XiaoXinDaDa PPkun Cramfs28 Wwrrj Sakura Ex3124 Mtf Xph erfanGSI Nippon VegaBobo mi20210630 巨龙Jvlong 
 
