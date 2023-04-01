@@ -21,3 +21,7 @@ Test Date: February 4th, 2023
 Future updates:
 1. phh switch
 2. Support for more ROMs
+
+## Chinese Version
+
+[点我查看中文版本](./README-zh.md)
