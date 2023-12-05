@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       ROM_URL:
-        description: 'Direct link/直链'
+        description: 'Прямая ссылка на прошивку:'
         required: true
         default: 'https://mirrorbits.lineageos.org/full/sagit/20230302/lineage-20.0-20230302-nightly-sagit-signed.zip'
       REPACK_NAME:
-        description: 'Compressed name/打包名称'
+        description: 'Имя сжатого файла:'
         required: true
         default: 'Compressed.7z'
       ROM_TYPE:
-        description: 'ROM type/ROM 类型'
+        description: 'Тип GSI (Generic, Pixel, etc.) '
         required: true
         default: 'Generic'
 env:
@@ -34,27 +34,17 @@ jobs:
           echo "BUILD_TIME=$(date +%s | md5sum | awk '{print substr($1,1,10)}')" >> $GITHUB_ENV
           echo "BUILD_sTIME=$(TZ=Asia/Shanghai date -d @$(date +%s) +'%Y-%m-%d %H:%M:%S %Z')" >> $GITHUB_ENV
 
-      - name: 发送 Telegram 提醒消息 1/2
-        uses: appleboy/telegram-action@master
-        with:
-         to: 1214932938
-         token: ${{ secrets.TELEGRAM_TOKEN }}
-         message: tosasitill GSI 开始构建！
-                      构建开始时间：${{ env.BUILD_sTIME }}
-                         提交链接：${{ github.event.inputs.ROM_URL }}
-                             提交 GSI 类型：${{ github.event.inputs.ROM_TYPE }}
-
-      - name: 配置环境‌‌
+      - name: Установка зависимостей...
         run: |
           sudo apt install -y git wget git gzip unzip curl axel aria2 zstd rename p7zip-full pigz
 
-      - name: 获取 ErfanGSI 工具
+      - name: Установка cxdGSI...
         uses: actions/checkout@main
         with:
           repository: tosasitill/erfanSGSI
           path: ErfanGSIs
 
-      - name: 更换 777 权限
+      - name: Выдача прав 777...
         run: |
           sudo chmod 777 -R $GITHUB_WORKSPACE/ErfanGSIs
 
@@ -63,7 +53,7 @@ jobs:
               sed -i 's/\|\| exit 1//g' ErfanGSIs/url2GSI.sh
               sed -i 's/exit 1//g' ErfanGSIs/url2GSI.sh
 
-      - name: 建立并配置 ErfanGSI 工具所需环境
+      - name: Настройка cxdGSI...
         run: |
           sudo sed -i 's/USE_MIRROR_FOR_PIP\=true/USE_MIRROR_FOR_PIP\=false/' $GITHUB_WORKSPACE/ErfanGSIs/setup.sh
           sudo bash $GITHUB_WORKSPACE/ErfanGSIs/setup.sh
@@ -71,12 +61,12 @@ jobs:
           java -version
           pip3 install aligo
 
-      - name: 下载 ROM 并制作 GSI
+      - name: Скачивание прошивки и преобразование в GSI-образ...
         run: |
           cd ${{ github.workspace }}/ErfanGSIs/
           sudo bash ./url2GSI.sh --ab ${{ github.event.inputs.ROM_URL }} ${{ github.event.inputs.ROM_TYPE }}
 
-      - name: 压缩 GSI
+      - name: Архивация GSI...
         if: ${{ github.event.inputs.ALI }} != '1'
         run: |
           cd $GITHUB_WORKSPACE/ErfanGSIs
@@ -87,16 +77,7 @@ jobs:
           ls upload_ab
           if [ $(ls -l tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | awk '{print $5}') -gt 2147483647 ]; then tar cvzpf - tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | split -d -b 1024m - upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; else mv tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; fi
 
-      - name: 发送 Telegram 提醒消息 2/2
-        uses: appleboy/telegram-action@master
-        with:
-            to: 1214932938
-            token: ${{ secrets.TELEGRAM_TOKEN }}
-            message: tosasitill GSI 构建成功!
-              构建 GSI 详细信息如下！
-            document: ${{ github.workspace }}/ErfanGSIs/build_info.txt
-
-      - name: 上传至 Github Releases
+      - name: Загрузка на GitHub Releases...
         if: ${{ github.event.inputs.ALI }} != '1'
         uses: ncipollo/release-action@v1.12.0
         with:
