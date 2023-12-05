@@ -39,7 +39,10 @@ jobs:
         with:
          to: 5255926151
          token: ${{ secrets.TELEGRAM_TOKEN }}
-         message: Запущен процесс сборки GSI-образа.\nВремя начала сборки：${{ env.BUILD_sTIME }}\nПрямая ссылка：${{ github.event.inputs.ROM_URL }}\nТип GSI：${{ github.event.inputs.ROM_TYPE }}
+         message: Запущен процесс сборки GSI-образа. \n
+          Время начала сборки：${{ env.BUILD_sTIME }} \n
+          Прямая ссылка：${{ github.event.inputs.ROM_URL }} \n
+          Тип GSI：${{ github.event.inputs.ROM_TYPE }}
 
       - name: Установка зависимостей...
         run: |
@@ -77,11 +80,11 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/ErfanGSIs
           pwd
-          7za a -mmt16 -t7z -r tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} output/*
-          ls "tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}"
+          7za a -mmt16 -t7z -r cxdGSI-${{ github.event.inputs.REPACK_NAME }} output/*
+          ls "cxdGSI-${{ github.event.inputs.REPACK_NAME }}"
           mkdir upload_ab
           ls upload_ab
-          if [ $(ls -l tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | awk '{print $5}') -gt 2147483647 ]; then tar cvzpf - tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | split -d -b 1024m - upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; else mv tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; fi
+          if [ $(ls -l cxdGSI-${{ github.event.inputs.REPACK_NAME }} | awk '{print $5}') -gt 2147483647 ]; then tar cvzpf - cxdGSI-${{ github.event.inputs.REPACK_NAME }} | split -d -b 1024m - upload_ab/cxdGSI-${{ github.event.inputs.REPACK_NAME }}; else mv cxdGSI-${{ github.event.inputs.REPACK_NAME }} upload_ab/cxdGSI-${{ github.event.inputs.REPACK_NAME }}; fi
 
       - name: Отправка уведомления в Telegram 2/2
         uses: appleboy/telegram-action@master
