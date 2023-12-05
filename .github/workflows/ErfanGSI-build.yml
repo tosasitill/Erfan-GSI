@@ -39,10 +39,7 @@ jobs:
         with:
          to: 5255926151
          token: ${{ secrets.TELEGRAM_TOKEN }}
-         message: Запущен процесс сборки GSI-образа.
-                     %sВремя начала сборки：${{ env.BUILD_sTIME }}
-                         %sПрямая ссылка：${{ github.event.inputs.ROM_URL }}
-                             %sТип GSI：${{ github.event.inputs.ROM_TYPE }}
+         message: Запущен процесс сборки GSI-образа.\nВремя начала сборки：${{ env.BUILD_sTIME }}\nПрямая ссылка：${{ github.event.inputs.ROM_URL }}\nТип GSI：${{ github.event.inputs.ROM_TYPE }}
 
       - name: Установка зависимостей...
         run: |
