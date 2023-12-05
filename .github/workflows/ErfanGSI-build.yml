@@ -16,7 +16,7 @@ on:
         required: true
         default: 'Generic'
 env:
-  TELEGRAM_TO: 6682679471
+  TELEGRAM_TO: 5255926151
   TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
 
 jobs:
@@ -37,7 +37,7 @@ jobs:
       - name: Отправка уведомления в Telegram 1/2
         uses: appleboy/telegram-action@master
         with:
-         to: 6682679471
+         to: 5255926151
          token: ${{ secrets.TELEGRAM_TOKEN }}
          message: Запущен процесс сборки GSI-образа.
                      Время начала сборки：${{ env.BUILD_sTIME }}
@@ -89,7 +89,7 @@ jobs:
       - name: Отправка уведомления в Telegram 2/2
         uses: appleboy/telegram-action@master
         with:
-         to: 6682679471
+         to: 5255926151
          token: ${{ secrets.TELEGRAM_TOKEN }}
          message: Процесс сборки GSI-образа завершён.
          document: ${{ github.workspace }}/ErfanGSIs/build_info.txt
