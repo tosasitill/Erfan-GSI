@@ -34,6 +34,17 @@ jobs:
           echo "BUILD_TIME=$(date +%s | md5sum | awk '{print substr($1,1,10)}')" >> $GITHUB_ENV
           echo "BUILD_sTIME=$(TZ=Asia/Shanghai date -d @$(date +%s) +'%Y-%m-%d %H:%M:%S %Z')" >> $GITHUB_ENV
 
+      - name: Отправка уведомления в Telegram: 1/2
+        uses: appleboy/telegram-action@master
+        with:
+         to: 6682679471
+         token: ${{ secrets.TELEGRAM_TOKEN }}
+         message: Запущен процесс сборки GSI-образа.
+                     Время начала сборки：${{ env.BUILD_sTIME }}
+                         Прямая ссылка：${{ github.event.inputs.ROM_URL }}
+                             Тип GSI：${{ github.event.inputs.ROM_TYPE }}
+
+
       - name: Установка зависимостей...
         run: |
           sudo apt install -y git wget git gzip unzip curl axel aria2 zstd rename p7zip-full pigz
