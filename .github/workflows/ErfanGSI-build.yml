@@ -29,7 +29,7 @@ jobs:
         with:
           path: ErfanGSIs
 
-      - name: 获取变量
+      - name: Настройка времени...
         run: |
           echo "BUILD_TIME=$(date +%s | md5sum | awk '{print substr($1,1,10)}')" >> $GITHUB_ENV
           echo "BUILD_sTIME=$(TZ=Asia/Shanghai date -d @$(date +%s) +'%Y-%m-%d %H:%M:%S %Z')" >> $GITHUB_ENV
@@ -48,7 +48,7 @@ jobs:
         run: |
           sudo chmod 777 -R $GITHUB_WORKSPACE/ErfanGSIs
 
-      - name: 修复意外退出
+      - name: Закрытие запущенных процессов...
         run: |
               sed -i 's/\|\| exit 1//g' ErfanGSIs/url2GSI.sh
               sed -i 's/exit 1//g' ErfanGSIs/url2GSI.sh
