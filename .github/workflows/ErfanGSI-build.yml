@@ -34,7 +34,7 @@ jobs:
           echo "BUILD_TIME=$(date +%s | md5sum | awk '{print substr($1,1,10)}')" >> $GITHUB_ENV
           echo "BUILD_sTIME=$(TZ=Asia/Shanghai date -d @$(date +%s) +'%Y-%m-%d %H:%M:%S %Z')" >> $GITHUB_ENV
 
-      - name: Отправка уведомления в Telegram: 1/2
+      - name: Отправка уведомления в Telegram 1/2
         uses: appleboy/telegram-action@master
         with:
          to: 6682679471
@@ -85,6 +85,14 @@ jobs:
           mkdir upload_ab
           ls upload_ab
           if [ $(ls -l tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | awk '{print $5}') -gt 2147483647 ]; then tar cvzpf - tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} | split -d -b 1024m - upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; else mv tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }} upload_ab/tosasitillGSI0202_${{ github.event.inputs.REPACK_NAME }}; fi
+
+      - name: Отправка уведомления в Telegram 2/2
+        uses: appleboy/telegram-action@master
+        with:
+         to: 6682679471
+         token: ${{ secrets.TELEGRAM_TOKEN }}
+         message: Процесс сборки GSI-образа завершён.
+         document: ${{ github.workspace }}/ErfanGSIs/build_info.txt
 
       - name: Загрузка на GitHub Releases...
         if: ${{ github.event.inputs.ALI }} != '1'
