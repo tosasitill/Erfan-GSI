@@ -16,7 +16,7 @@ on:
         required: true
         default: 'Generic'
 env:
-  TELEGRAM_TO: 1214932938
+  TELEGRAM_TO: 6682679471
   TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
 
 jobs:
